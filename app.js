@@ -7,6 +7,7 @@ var logger = require('morgan');
 const cors =  require('cors');
 const passport = require('passport');
 const User = require('./models/user');
+const session = require("express-session");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

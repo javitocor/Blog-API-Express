@@ -1,12 +1,13 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-exports.signup_post = passport.authenticate('signup', { session: false }), async (req, res, next) => {
+exports.signup_post = passport.authenticate('signup', { session: false }),
+async (req, res, next) => {
   res.json({
     message: 'Signup successful',
     user: req.user
   });
-};
+}
 exports.login_post = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
       try {
@@ -33,5 +34,5 @@ exports.login_post = async (req, res, next) => {
 };
 exports.logout_get = (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.send();
 };

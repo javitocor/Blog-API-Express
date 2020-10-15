@@ -4,15 +4,6 @@ var router = express.Router();
 
 var index_controller = require('../controllers/indexController');
 
-
-router.get('/', function(req, res) {
-  if(req.user){
-    res.redirect('/posts');
-  } else {
-    res.redirect('/log-in');
-  }  
-});
-
 router.post("/signup", index_controller.signup_post);
 //Post login page
 router.post("/login", index_controller.login_post);
