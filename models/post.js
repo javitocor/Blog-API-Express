@@ -11,6 +11,10 @@ var PostSchema = new Schema({
     timestamp: {type : Date, default: Date.now },
 });
 
+PostSchema.pre('remove', function(next) {
+  this.model('Comment').deleteMany({ post: this._id }, next);
+});
+
 // Virtual for this Post instance URL.
 PostSchema
 .virtual('url')

@@ -5,7 +5,7 @@ var user_controller = require('../controllers/userController');
 
 router.get('/', user_controller.user_list);
 router.get('/:id', user_controller.user_detail);
-router.update('/:id', user_controller.user_update);
+router.put('/:id', user_controller.user_update);
 router.delete('/:id', user_controller.user_delete);
 
 
