@@ -9,6 +9,11 @@ var UserSchema = new Schema({
     image: {type: String},
 });
 
+UserSchema.pre('remove', function(next) {
+  this.model('Post').deleteMany({ author: this._id }, next);
+  this.model('Comment').deleteMany({ author: this._id }, next);
+});
+
 UserSchema
 .virtual('imageUrl')
 .get(function () {
