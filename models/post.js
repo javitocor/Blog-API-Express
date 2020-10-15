@@ -15,7 +15,7 @@ var PostSchema = new Schema({
 PostSchema
 .virtual('url')
 .get(function () {
-  return '/post/'+this._id;
+  return '/posts/'+this._id;
 });
 
 PostSchema
