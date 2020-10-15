@@ -5,6 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors =  require('cors');
+const passport = require('passport');
+const User = require('./models/user');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,6 +25,8 @@ var db = mongoose.connection;
 mongoose.set('useFindAndModify', false);
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+require('./auth/auth');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -39,9 +43,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/comments', commentsRouter);
+app.use('/users', passport.authenticate('jwt', { session: false }), usersRouter);
+app.use('/posts', passport.authenticate('jwt', { session: false }), postsRouter);
+app.use(
+  '/posts/:id/comments',
+  (req, res, next) => {
+    req.post_id = req.params.id;
+    next();
+  },
+  commentsRouter
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

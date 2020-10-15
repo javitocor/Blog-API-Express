@@ -6,13 +6,13 @@ var Schema = mongoose.Schema;
 var PostSchema = new Schema({
     title: {type: String, required: true, min: 3, max: 20},
     text: {type: String, required: true, min: 5, max: 250},
-    author: {type: Schema.ObjectId, ref: 'User', required: true},
+    author_id: {type: Schema.ObjectId, ref: 'User', required: true},
     isPublished: {type: Boolean, default: false},
     timestamp: {type : Date, default: Date.now },
 });
 
 PostSchema.pre('remove', function(next) {
-  this.model('Comment').deleteMany({ post: this._id }, next);
+  this.model('Comment').deleteMany({ post_id: this._id }, next);
 });
 
 // Virtual for this Post instance URL.

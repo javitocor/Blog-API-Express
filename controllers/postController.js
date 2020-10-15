@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const jwt = require('jsonwebtoken');
 
 exports.post_list = async (req, res, next) => {
   try {
@@ -22,7 +23,7 @@ exports.post_list_all = async (req, res, next) => {
 exports.post_detail = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
-    const comments = await Comment.find({ post: post._id });
+    const comments = await Comment.find({ post_id: post._id });
     res.json({post, comments});
   } catch (error) {
     res.json(error)
@@ -34,7 +35,7 @@ exports.post_create = async (req, res, next) => {
   const post = new Post({
     title,
     text,
-    author: ,
+    author: jwt.decode(req.token).user._id,
   });
   try {
     await post.save();
@@ -50,7 +51,7 @@ exports.post_update = async (req, res, next) => {
   const post = new Post({
     title,
     text,
-    author: ,
+    author: jwt.decode(req.token).user._id,
     _id: req.params.id
   });
   try {

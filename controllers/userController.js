@@ -14,8 +14,8 @@ exports.user_list = async (req, res, next) => {
 exports.user_detail = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
-    const posts = await Post.find({ author: user._id });
-    const comments = await Comment.find({ author: user._id });
+    const posts = await Post.find({ author_id: user._id });
+    const comments = await Comment.find({ author_id: user._id });
     res.json({user, posts, comments});
   } catch (error) {
     res.json(error)

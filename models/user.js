@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 var Schema = mongoose.Schema;
 
@@ -10,9 +11,25 @@ var UserSchema = new Schema({
 });
 
 UserSchema.pre('remove', function(next) {
-  this.model('Post').deleteMany({ author: this._id }, next);
-  this.model('Comment').deleteMany({ author: this._id }, next);
+  this.model('Post').deleteMany({ author_id: this._id });
+  this.model('Comment').deleteMany({ author_id: this._id });
+  next();
 });
+
+UserSchema.pre('save', async function(next) {
+    const hash = await bcrypt.hash(this.password, 10);
+
+    this.password = hash;
+    next();
+  }
+);
+
+UserSchema.methods.isValidPassword = async function(password) {
+  const user = this;
+  const compare = await bcrypt.compare(password, user.password);
+
+  return compare;
+}
 
 UserSchema
 .virtual('imageUrl')
