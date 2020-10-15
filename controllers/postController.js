@@ -22,7 +22,8 @@ exports.post_list_all = async (req, res, next) => {
 exports.post_detail = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
-    res.json(post);
+    const comments = await Comment.find({ post: post._id });
+    res.json(post, comments);
   } catch (error) {
     res.json(error)
     next();
