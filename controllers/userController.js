@@ -32,7 +32,7 @@ exports.user_update = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.params.id, user);
     res.status(201);
-    res.send();
+    res.send('User updated successfully');
   } catch (error) {
     res.json(error)
     next();
@@ -42,7 +42,7 @@ exports.user_delete = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200);
-    res.send();
+    res.send('User deleted Successfully');
   } catch (error) {
     res.json(error)
     next();

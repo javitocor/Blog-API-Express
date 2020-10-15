@@ -10,7 +10,7 @@ exports.comment_create = async (req, res, next) => {
   try {
     await comment.save();
     res.status(201);
-    res.send();
+    res.send('Comment created successfully');
   } catch (error) {
     res.json(error)
     next();
@@ -20,7 +20,7 @@ exports.comment_delete = async (req, res, next) => {
   try {
     await Comment.findByIdAndDelete(req.params.id);
     res.status(200);
-    res.send();
+    res.send('Comment deleted successfully');
   } catch (error) {
     res.json(error)
     next();

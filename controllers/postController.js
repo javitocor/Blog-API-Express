@@ -39,7 +39,7 @@ exports.post_create = async (req, res, next) => {
   try {
     await post.save();
     res.status(201);
-    res.send();
+    res.send('Post created successfully');
   } catch (error) {
     res.json(error)
     next();
@@ -56,7 +56,7 @@ exports.post_update = async (req, res, next) => {
   try {
     await Post.findByIdAndUpdate(req.params.id, post);
     res.status(201);
-    res.send();
+    res.send('Post updated successfully');
   } catch (error) {
     res.json(error)
     next();
@@ -66,7 +66,7 @@ exports.post_delete = async (req, res, next) => {
   try {
     await Post.findByIdAndDelete(req.params.id);
     res.status(200);
-    res.send();
+    res.send('Post deleted Successfully');
   } catch (error) {
     res.json(error)
     next();
